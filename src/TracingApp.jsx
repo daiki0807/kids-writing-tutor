@@ -62,31 +62,31 @@ const TracingApp = () => {
     const drawGuide = (ctx, w, h) => {
         ctx.clearRect(0, 0, w, h);
 
-        // --- マス目の描画（十字の点線と外枠） ---
-        ctx.save();
-        const boxSize = Math.min(w, h) * 0.8; // 文字の枠のサイズ
-        const offsetX = (w - boxSize) / 2;
-        const offsetY = (h - boxSize) / 2;
+        // --- マス目の描画（ひらがな・カタカナのみ） ---
+        if (activeCategory === 'hiragana' || activeCategory === 'katakana') {
+            ctx.save();
+            const boxSize = Math.min(w, h) * 0.8;
+            const offsetX = (w - boxSize) / 2;
+            const offsetY = (h - boxSize) / 2;
 
-        // 外側の枠線（実線）
-        ctx.strokeStyle = '#d1d5db'; // gray-300
-        ctx.lineWidth = 2;
-        ctx.strokeRect(offsetX, offsetY, boxSize, boxSize);
+            // 外側の枠線（実線）
+            ctx.strokeStyle = '#d1d5db';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(offsetX, offsetY, boxSize, boxSize);
 
-        // 十字の補助線（点線）
-        ctx.beginPath();
-        // 縦線
-        ctx.moveTo(w / 2, offsetY);
-        ctx.lineTo(w / 2, offsetY + boxSize);
-        // 横線
-        ctx.moveTo(offsetX, h / 2);
-        ctx.lineTo(offsetX + boxSize, h / 2);
+            // 十字の補助線（点線）
+            ctx.beginPath();
+            ctx.moveTo(w / 2, offsetY);
+            ctx.lineTo(w / 2, offsetY + boxSize);
+            ctx.moveTo(offsetX, h / 2);
+            ctx.lineTo(offsetX + boxSize, h / 2);
 
-        ctx.strokeStyle = '#e5e7eb'; // gray-200
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5, 5]);
-        ctx.stroke();
-        ctx.restore();
+            ctx.strokeStyle = '#e5e7eb';
+            ctx.lineWidth = 1.5;
+            ctx.setLineDash([5, 5]);
+            ctx.stroke();
+            ctx.restore();
+        }
         // --- マス目の描画おわり ---
 
         if (currentModel.text) {
